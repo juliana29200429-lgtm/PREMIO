@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felicidades! Ganaste un Viaje a Pasto | LATAM Airlines</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Tone.js para efectos de sonido de celebración sin URLs externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        latam: {
+                            indigo: '#1B0088',
+                            dark: '#10004F',
+                            coral: '#ED1650',
+                            coralHover: '#C81042',
+                            gold: '#D4AF37',
+                            goldBright: '#F5B841',
+                            light: '#F4F6FA',
+                            skyStart: '#DDF2FF',
+                            skyMid: '#BCE6FF',
+                            skyEnd: '#E8F7FF'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Montserrat', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fondo azul pastel claro tipo cielo despejado */
+        body {
+            background: linear-gradient(160deg, #DDF2FF 0%, #BCE6FF 50%, #E8F7FF 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animación de nubes flotando suavemente */
+        @keyframes floatCloudRight {
+            0% { transform: translateX(-25vw); }
+            100% { transform: translateX(115vw); }
+        }
+
+        @keyframes floatCloudLeft {
+            0% { transform: translateX(115vw); }
+            100% { transform: translateX(-25vw); }
+        }
+
+        .cloud-slow {
+            animation: floatCloudRight 48s linear infinite;
+        }
+
+        .cloud-medium {
+            animation: floatCloudLeft 38s linear infinite;
+        }
+
+        .cloud-fast {
+            animation: floatCloudRight 28s linear infinite;
+        }
+
+        /* Destellos dorados sutiles en el cielo */
+        @keyframes twinkleSparkle {
+            0%, 100% { opacity: 0.25; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 0.95; transform: scale(1.2) rotate(20deg); }
+        }
+
+        .sparkle {
+            animation: twinkleSparkle 3.5s ease-in-out infinite;
+        }
+
+        /* Animación de avión cruzando el cielo */
+        @keyframes flyAcross {
+            0% {
+                transform: translate(-15vw, 35px) rotate(-8deg) scale(0.85);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(115vw, -25px) rotate(-5deg) scale(1.05);
+                opacity: 0;
+            }
+        }
+
+        .flying-plane {
+            animation: flyAcross 13s linear infinite;
+        }
+
+        /* Brillo metálico dorado para texto sobre fondo claro */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .gold-text-metallic {
+            background: linear-gradient(90deg, #B8860B 0%, #D4AF37 35%, #F3D06B 50%, #B8860B 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3.5s linear infinite;
+        }
+
+        /* Sello de Confirmación Animado */
+        @keyframes stampSlam {
+            0% {
+                opacity: 0;
+                transform: scale(3.5) rotate(-25deg);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(0.9) rotate(-12deg);
+            }
+            80% {
+                transform: scale(1.05) rotate(-12deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(-12deg);
+            }
+        }
+
+        .stamp-active {
+            animation: stampSlam 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Pulso suave en botón principal */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 8px 20px rgba(237, 22, 80, 0.35); }
+            50% { box-shadow: 0 12px 30px rgba(237, 22, 80, 0.65); }
+        }
+
+        .btn-pulse {
+            animation: pulseGlow 2.5s infinite;
+        }
+    </style>
+</head>
+<body class="text-latam-indigo font-sans relative selection:bg-latam-coral selection:text-white">
+
+    <!-- Capa Decorativa: Nubes Blancas Esponjosas y Destellos Dorados -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <!-- Nube 1 (Superior Izquierda) -->
+        <svg class="cloud-slow absolute top-10 left-0 w-56 sm:w-72 text-white/90 drop-shadow-[0_10px_20px_rgba(27,0,136,0.06)]" viewBox="0 0 200 80" fill="currentColor">
+            <path d="M45 65h110c16.5 0 30-11.5 30-26 0-13.2-10.8-24.2-24.8-25.8C154.5 5.4 143.5 0 131 0c-15.2 0-28.4 8.2-34.5 20.2C91.8 18.2 86.5 17 81 17c-17.8 0-32.5 12.2-35.4 28.2C31.2 46.8 20 55.2 20 65h25z"/>
+        </svg>
+
+        <!-- Nube 2 (Media Derecha) -->
+        <svg class="cloud-medium absolute top-44 left-0 w-64 sm:w-80 text-white/85 drop-shadow-[0_10px_20px_rgba(27,0,136,0.05)]" style="animation-delay: -14s;" viewBox="0 0 200 80" fill="currentColor">
+            <path d="M40 68h120c18 0 32-12 32-27 0-14-12-25.5-27-26.8C159 5.5 147 0 133 0c-16 0-30 8.5-36 21-5-2-10.5-3-16.5-3-19 0-34.5 13-37.5 30C28 49.5 16 58 16 68h24z"/>
+        </svg>
+
+        <!-- Nube 3 (Inferior Izquierda) -->
+        <svg class="cloud-fast absolute bottom-24 left-0 w-48 sm:w-64 text-white/80 drop-shadow-[0_8px_16px_rgba(27,0,136,0.05)]" style="animation-delay: -8s;" viewBox="0 0 200 80" fill="currentColor">
+            <path d="M45 65h110c16.5 0 30-11.5 30-26 0-13.2-10.8-24.2-24.8-25.8C154.5 5.4 143.5 0 131 0c-15.2 0-28.4 8.2-34.5 20.2C91.8 18.2 86.5 17 81 17c-17.8 0-32.5 12.2-35.4 28.2C31.2 46.8 20 55.2 20 65h25z"/>
+        </svg>
+
+        <!-- Destellos Dorados en el Cielo -->
+        <svg class="sparkle absolute top-24 right-[15%] w-6 h-6 text-latam-gold" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z"/>
+        </svg>
+        <svg class="sparkle absolute top-64 left-[10%] w-5 h-5 text-latam-gold" style="animation-delay: 1.2s;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z"/>
+        </svg>
+        <svg class="sparkle absolute bottom-40 right-[12%] w-7 h-7 text-latam-gold" style="animation-delay: 2.1s;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1L14.5 9.5L23 12L14.5 14.5L12 23L9.5 14.5L1 12L9.5 9.5L12 1Z"/>
+        </svg>
+    </div>
+
+    <!-- Avión animado cruzando entre las nubes -->
+    <div class="fixed top-16 left-0 pointer-events-none z-0 w-full overflow-hidden h-32">
+        <div class="flying-plane inline-flex items-center gap-2">
+            <!-- Estela blanca de condensación -->
+            <div class="w-28 sm:w-44 h-1 bg-gradient-to-r from-transparent via-white/70 to-white rounded-full"></div>
+            <!-- SVG Avión Comercial con colores LATAM -->
+            <svg class="w-11 h-11 sm:w-14 sm:h-14 text-latam-indigo drop-shadow-[0_6px_12px_rgba(27,0,136,0.25)]" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" transform="rotate(90 12 12)"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+
+                <!-- Header Oficial Estilo LATAM Airlines -->
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-latam-indigo/15">
+            <!-- Logo LATAM Oficial (Cintas plegadas formando Sudamérica sobre Azul Índigo) -->
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-latam-indigo flex items-center justify-center shadow-lg shadow-latam-indigo/25 shrink-0 p-2">
+                    <svg class="w-full h-full" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Tres bandas superiores en rojo coral (#ED1650) inclinadas hacia abajo-derecha -->
+                        <path d="M36 12 C34 11.2 32 12.6 32 14.8 L32 23.5 C32 25.2 33.1 26.7 34.7 27.3 L78 44.2 L83 31.5 L36 12 Z" fill="#ED1650"/>
+                        <path d="M21 27.5 C19 26.7 17 28.1 17 30.3 L17 39 C17 40.7 18.1 42.2 19.7 42.8 L78 65.5 L83 52.8 L21 27.5 Z" fill="#ED1650"/>
+                        <path d="M21 48.5 C19 47.7 17 49.1 17 51.3 L17 60 L34 66.5 L48 59.5 L21 48.5 Z" fill="#ED1650"/>
+                        <!-- Cinta blanca superior plegada de derecha a izquierda -->
+                        <path d="M83 31.5 C84.5 32.2 85.5 33.7 85.5 35.4 L85.5 44.5 C85.5 46.3 84.4 47.9 82.7 48.6 L34.5 67.5 C32.8 68.2 30.9 68.2 29.2 67.5 L17 62.5 L17 60 C17 61.2 18.2 61.8 19.5 61.3 L81 36.8 C82.5 36.2 83.2 34.5 83 31.5 Z" fill="#FFFFFF"/>
+                        <!-- Segunda cinta blanca paralela debajo -->
+                        <path d="M83 52.8 C84.5 53.5 85.5 55 85.5 56.7 L85.5 65.8 C85.5 67.6 84.4 69.2 82.7 69.9 L32 89.8 L32 76.2 L81 56.9 C82.5 56.3 83.2 54.8 83 52.8 Z" fill="#FFFFFF"/>
+                        <!-- Tres segmentos blancos escalonados descendiendo hacia el cono sur -->
+                        <path d="M32 97.5 L57.5 87.5 C59.3 86.8 61.2 88.1 61.2 90 L61.2 97.5 C61.2 99.2 60.1 100.7 58.5 101.3 L32 111.7 L32 97.5 Z" fill="#FFFFFF"/>
+                        <path d="M32 116.5 L42.5 112.4 C44.2 111.7 46 113 46 114.8 L46 117.5 C46 118.8 45.1 119.9 43.9 120 L32 120 L32 116.5 Z" fill="#FFFFFF"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-display font-black text-2xl sm:text-3xl tracking-wider text-latam-indigo">LATAM</span>
+                        <span class="font-display font-bold text-[11px] sm:text-xs tracking-widest uppercase text-white bg-latam-coral px-2.5 py-0.5 rounded-full shadow-sm">AIRLINES</span>
+                    </div>
+                    <p class="text-xs text-latam-indigo/80 tracking-widest uppercase font-bold">LATAM PASS • VIP REWARDS</p>
+                </div>
+            </div>
+            <!-- Insignia Dorada de Ganador + Botón Rápido de Confeti -->
+            <div class="flex items-center gap-2">
+                <div class="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md border-2 border-latam-gold px-4 py-2 rounded-full shadow-md">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-latam-coral opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-latam-coral"></span>
+                    </span>
+                    <span class="text-xs sm:text-sm font-display font-extrabold tracking-wider text-latam-indigo uppercase">
+                        ★ ¡FELICIDADES! ERES GANADOR(A)
+                    </span>
+                </div>
+                <button onclick="launchLatamConfetti(1.3)" title="Lanzar más confeti" class="cursor-pointer bg-white/90 hover:bg-white text-latam-coral border-2 border-latam-coral/30 p-2 rounded-full shadow-md transition-transform active:scale-90">
+                    🎉
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section: Anuncio de Premio Ganador con Alto Contraste -->
+        <section class="text-center mt-8 sm:mt-10 mb-10">
+            <div class="inline-flex items-center gap-2 mb-3 px-4 py-1.5 rounded-full bg-latam-indigo text-white font-display font-bold text-xs sm:text-sm uppercase tracking-widest shadow-md">
+                <span>🏆</span>
+                <span>PREMIO OFICIAL VERIFICADO</span>
+                <span>🏆</span>
+            </div>
+            
+            <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl leading-tight tracking-tight uppercase text-latam-indigo drop-shadow-sm">
+                <span class="block gold-text-metallic mb-1 drop-shadow-none">¡FELICIDADES!</span>
+                TE GANASTE UN VIAJE A <span class="text-latam-coral underline decoration-latam-gold decoration-4 underline-offset-8">PASTO</span> TODO INCLUIDO
+            </h1>
+
+            <p class="mt-5 text-base sm:text-xl text-slate-800 font-semibold max-w-2xl mx-auto bg-white/75 backdrop-blur-sm px-5 py-2.5 rounded-2xl border border-white shadow-sm">
+                Volando con <strong class="text-latam-indigo font-black">la mejor aerolínea de todas: <span class="text-latam-coral">LATAM Airlines</span></strong> ✈️✨
+            </p>
+        </section>
+
+        <!-- Tarjeta Central: Boarding Pass VIP Interactivo -->
+        <section class="relative max-w-3xl mx-auto mb-10">
+            <div id="boarding-pass" class="bg-white text-slate-900 rounded-3xl shadow-[0_20px_50px_rgba(27,0,136,0.16)] overflow-hidden border-2 border-white relative transition-transform duration-300 hover:scale-[1.01]">
+                
+                <!-- Sello Oculto que aparece al Confirmar -->
+                <div id="confirmed-stamp" class="hidden pointer-events-none absolute inset-0 z-30 flex items-center justify-center bg-latam-indigo/10 backdrop-blur-[1px]">
+                    <div class="border-4 sm:border-[6px] border-emerald-600 text-emerald-600 font-display font-black text-xl sm:text-3xl uppercase tracking-widest px-6 py-4 rounded-2xl bg-white/95 shadow-2xl transform -rotate-12 text-center">
+                        PREMIO CONFIRMADO • VUELO LA 4286
+                        <span class="block text-xs sm:text-sm font-bold tracking-normal text-emerald-700 mt-1">PASE VIP LISTO PARA ABORDAR</span>
+                    </div>
+                </div>
+
+                <!-- Franja Superior del Pase de Abordar -->
+                <div class="bg-gradient-to-r from-latam-indigo via-[#2800B8] to-latam-coral px-6 py-4 text-white flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-latam-goldBright" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <span class="font-display font-extrabold tracking-wider text-sm sm:text-base uppercase">BOARDING PASS • VIP / TODO INCLUIDO</span>
+                    </div>
+                    <span class="font-mono text-xs sm:text-sm bg-black/25 px-3 py-1 rounded-full font-bold">
+                        VUELO LA 4286
+                    </span>
+                </div>
+
+                <!-- Cuerpo Principal del Ticket -->
+                <div class="p-6 sm:p-8">
+                    <!-- Ruta de Vuelo: BOG -> PSO -->
+                    <div class="flex items-center justify-between gap-2 sm:gap-6 pb-6 border-b border-slate-200">
+                        <div class="text-left">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">ORIGEN</span>
+                            <span class="font-display font-black text-3xl sm:text-5xl text-latam-indigo">BOG</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-600 block mt-0.5">Bogotá, Colombia</span>
+                        </div>
+
+                        <!-- Trayectoria con Avión -->
+                        <div class="flex-1 flex flex-col items-center px-2">
+                            <span class="text-[11px] font-extrabold text-latam-coral uppercase tracking-widest mb-1">LATAM AIRLINES</span>
+                            <div class="w-full flex items-center gap-2">
+                                <div class="h-2.5 w-2.5 rounded-full bg-latam-indigo"></div>
+                                <div class="flex-1 border-t-2 border-dashed border-slate-300 relative flex justify-center">
+                                    <div class="bg-white px-2 -mt-3.5 text-latam-coral">
+                                        <svg class="w-6 h-6 transform rotate-90" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="h-2.5 w-2.5 rounded-full bg-latam-coral"></div>
+                            </div>
+                            <span class="text-xs font-mono font-extrabold text-latam-indigo mt-1">VUELO LA 4286</span>
+                        </div>
+
+                        <div class="text-right">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">DESTINO</span>
+                            <span class="font-display font-black text-3xl sm:text-5xl text-latam-coral">PSO</span>
+                            <span class="text-xs sm:text-sm font-bold text-slate-600 block mt-0.5">Pasto, Nariño</span>
+                        </div>
+                    </div>
+
+                    <!-- Detalles del Pasajero y Vuelo -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-6">
+                        <div class="bg-latam-light p-3.5 rounded-2xl border border-slate-200/60">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">AEROLÍNEA</span>
+                            <span class="font-display font-extrabold text-sm sm:text-base text-latam-indigo">LATAM Airlines</span>
+                        </div>
+                        <div class="bg-latam-light p-3.5 rounded-2xl border border-slate-200/60">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">NÚMERO DE VUELO</span>
+                            <span class="font-display font-black text-sm sm:text-base text-latam-coral">LA 4286</span>
+                        </div>
+                        <div class="bg-latam-light p-3.5 rounded-2xl border border-slate-200/60">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">CLASE</span>
+                            <span class="font-display font-extrabold text-sm sm:text-base text-latam-indigo">VIP / 1A</span>
+                        </div>
+                        <div class="bg-latam-light p-3.5 rounded-2xl border border-slate-200/60">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">BENEFICIOS</span>
+                            <span class="font-display font-extrabold text-sm sm:text-base text-emerald-600">TODO INCLUIDO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Línea Punteada de Corte con Muescas que coinciden con el cielo pastel -->
+                <div class="relative flex items-center justify-between">
+                    <div class="w-7 h-7 bg-[#C5EAFF] rounded-full -ml-3.5 shadow-inner"></div>
+                    <div class="flex-1 border-t-2 border-dashed border-slate-300 mx-2"></div>
+                    <div class="w-7 h-7 bg-[#C5EAFF] rounded-full -mr-3.5 shadow-inner"></div>
+                </div>
+
+                <!-- Talón Inferior con Código QR y Código de Barras -->
+                <div class="bg-slate-50 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <!-- Código QR Decorativo SVG -->
+                        <div class="p-2 bg-white rounded-xl border border-slate-200 shadow-sm shrink-0">
+                            <svg class="w-14 h-14 text-latam-indigo" viewBox="0 0 36 36" fill="currentColor">
+                                <path d="M2 2h10v10H2V2zm2 2v6h6V4H4zm2 2h2v2H6V6zm18-4h10v10H24V2zm2 2v6h6V4h-6zm2 2h2v2h-2V6zM2 24h10v10H2V24zm2 2v6h6v-6H4zm2 2h2v2H6v-2zm10-24h2v4h-2V4zm4 2h2v4h-2V6zm-4 6h4v2h-4v-2zm-12 4h4v2H4v-2zm6 0h4v4h-4v-4zm6 2h4v2h-4v-2zm6-2h6v2h-6v-2zm-18 4h2v4H4v-4zm6 2h2v2h-2v-2zm4-2h4v4h-4v-4zm6 2h2v4h-2v-4zm4-2h4v2h-4v-2zm-10 6h2v6h-2v-6zm4 2h4v2h-4v-2zm6 0h4v4h-4v-4zm-4 4h2v2h-2v-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-display font-extrabold text-xs uppercase tracking-wider text-latam-indigo">Pase Oficial LATAM Pass • Vuelo LA 4286</p>
+                            <p class="text-xs text-slate-600 mt-0.5">Incluye tiquetes ida y vuelta, hospedaje, alimentación y tours en Pasto.</p>
+                            <p class="font-mono text-[11px] font-semibold text-slate-400 mt-1">REF: LTM-PSO-4286-VIP</p>
+                        </div>
+                    </div>
+
+                    <!-- Código de barras decorativo -->
+                    <div class="flex flex-col items-center sm:items-end">
+                        <div class="flex items-stretch h-10 gap-[2px] opacity-85">
+                            <div class="w-1 bg-latam-indigo"></div>
+                            <div class="w-0.5 bg-latam-indigo"></div>
+                            <div class="w-1.5 bg-latam-indigo"></div>
+                            <div class="w-0.5 bg-latam-indigo"></div>
+                            <div class="w-1 bg-latam-indigo"></div>
+                            <div class="w-2 bg-latam-indigo"></div>
+                            <div class="w-0.5 bg-latam-indigo"></div>
+                            <div class="w-1 bg-latam-indigo"></div>
+                            <div class="w-1.5 bg-latam-indigo"></div>
+                            <div class="w-0.5 bg-latam-indigo"></div>
+                            <div class="w-1 bg-latam-indigo"></div>
+                            <div class="w-0.5 bg-latam-indigo"></div>
+                            <div class="w-2 bg-latam-indigo"></div>
+                            <div class="w-1 bg-latam-indigo"></div>
+                        </div>
+                        <span class="font-mono text-[10px] font-bold tracking-[0.25em] text-slate-500 mt-1">LA-4286-VIP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Destacada: Instrucciones para Reclamar el Premio (Alto Contraste) -->
+        <section class="max-w-3xl mx-auto mb-10">
+            <div class="bg-white/95 backdrop-blur-lg border-2 border-latam-gold rounded-3xl p-6 sm:p-8 shadow-[0_18px_40px_rgba(27,0,136,0.12)] relative overflow-hidden">
+                <!-- Brillo decorativo esquina -->
+                <div class="absolute -top-12 -right-12 w-36 h-36 bg-latam-gold/15 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-11 h-11 rounded-2xl bg-latam-indigo text-latam-goldBright flex items-center justify-center shrink-0 shadow-md">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="font-display font-black text-xl sm:text-2xl text-latam-indigo uppercase tracking-wide">
+                            Instrucciones de Entrega del Premio
+                        </h2>
+                        <p class="text-xs sm:text-sm text-latam-coral font-bold">Lee atentamente los datos para recibir tu recompensa</p>
+                    </div>
+                </div>
+
+                <!-- Tarjetas de Día, Hora y Lugar -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <!-- Día -->
+                    <div class="bg-[#F2F7FF] border border-latam-indigo/15 rounded-2xl p-4 flex items-center sm:flex-col sm:items-start gap-3">
+                        <div class="p-2.5 rounded-xl bg-latam-coral/15 text-latam-coral">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-slate-500 font-bold block">DÍA</span>
+                            <span class="font-display font-black text-lg sm:text-xl text-latam-indigo">VIERNES</span>
+                        </div>
+                    </div>
+
+                    <!-- Hora -->
+                    <div class="bg-[#F2F7FF] border border-latam-indigo/15 rounded-2xl p-4 flex items-center sm:flex-col sm:items-start gap-3">
+                        <div class="p-2.5 rounded-xl bg-latam-gold/20 text-amber-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-slate-500 font-bold block">HORA EXACTA</span>
+                            <span class="font-display font-black text-lg sm:text-xl text-latam-coral">19:00 <span class="text-sm font-bold text-latam-indigo">(7:00 PM)</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Lugar -->
+                    <div class="bg-[#F2F7FF] border border-latam-indigo/15 rounded-2xl p-4 flex items-center sm:flex-col sm:items-start gap-3">
+                        <div class="p-2.5 rounded-xl bg-latam-indigo/10 text-latam-indigo">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase tracking-wider text-slate-500 font-bold block">PUNTO DE ENCUENTRO</span>
+                            <span class="font-display font-black text-base sm:text-lg text-latam-indigo leading-snug">Puerta de Ecotet Aviation Academy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensaje Principal Obligatorio -->
+                <div class="bg-gradient-to-r from-latam-indigo to-[#2B00C4] rounded-2xl p-5 shadow-lg flex items-start sm:items-center gap-4 text-white">
+                    <div class="text-2xl sm:text-3xl shrink-0">📢</div>
+                    <p class="font-display font-bold text-sm sm:text-lg leading-relaxed">
+                        "El día <span class="text-latam-goldBright underline decoration-2">VIERNES</span> debes estar puntualmente a las <span class="text-latam-goldBright underline decoration-2">19:00 (7:00 PM)</span> en la puerta de <span class="text-latam-goldBright font-black">Ecotet Aviation Academy</span> para recibir tu recompensa."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Botones Interactivos de Confirmación y Confeti -->
+        <section class="text-center max-w-xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button id="claim-btn" onclick="claimPrize()" class="btn-pulse w-full sm:w-auto cursor-pointer bg-latam-coral hover:bg-latam-coralHover active:scale-95 text-white font-display font-black text-base sm:text-lg uppercase tracking-wider px-7 py-5 rounded-2xl shadow-xl transition-all duration-200 flex items-center justify-center gap-3 border-2 border-white">
+                    <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span id="claim-btn-text">¡RECLAMAR Y CONFIRMAR MI PREMIO!</span>
+                </button>
+
+            </div>
+
+            <!-- Mensaje de Confirmación Dinámico -->
+            <div id="confirmation-box" class="hidden mt-6 bg-white/95 backdrop-blur-md border-2 border-emerald-500 rounded-2xl p-6 text-center shadow-xl transform transition-all duration-500">
+                <div class="text-3xl mb-2">🛫🎊🥂</div>
+                <h3 class="font-display font-black text-lg sm:text-xl text-emerald-700 uppercase">
+                    ¡Premio Confirmado • Vuelo LA 4286!
+                </h3>
+                <p class="text-sm sm:text-base text-slate-700 font-medium mt-1">
+                    Tu pase de abordar VIP ha sido validado. ¡Prepara tus maletas para Pasto! Te esperamos el <strong class="text-latam-indigo">viernes a las 19:00 en Ecotet Aviation Academy</strong>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-14 pt-6 border-t border-latam-indigo/15 text-center text-xs text-latam-indigo/80">
+            <p class="font-display font-extrabold tracking-wider uppercase">LATAM Airlines Group • Vuelo LA 4286 • Campaña Especial de Premios</p>
+            <p class="mt-1 font-medium">Sujeto a puntualidad el día viernes a las 19:00 hrs en Ecotet Aviation Academy.</p>
+        </footer>
+    </div>
+
+    <script>
+        let isConfirmed = false;
+
+        // Función para lanzar ráfaga de confeti con los colores de LATAM Airlines
+        function launchLatamConfetti(intensity = 1) {
+            const latamColors = ['#ED1650', '#1B0088', '#D4AF37', '#38BDF8', '#FFFFFF'];
+            
+            // Ráfaga izquierda
+            confetti({
+                particleCount: Math.floor(75 * intensity),
+                angle: 60,
+                spread: 65,
+                origin: { x: 0, y: 0.65 },
+                colors: latamColors
+            });
+
+            // Ráfaga derecha
+            confetti({
+                particleCount: Math.floor(75 * intensity),
+                angle: 120,
+                spread: 65,
+                origin: { x: 1, y: 0.65 },
+                colors: latamColors
+            });
+        }
+
+        // Sonido agradable de acorde de celebración usando Tone.js (sin archivos externos)
+        async function playCelebrationSound() {
+            try {
+                await Tone.start();
+                const synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.02, decay: 0.2, sustain: 0.2, release: 0.8 }
+                }).toDestination();
+                synth.volume.value = -8;
+                const now = Tone.now();
+                // Acorde brillante estilo anuncio de aeropuerto / victoria
+                synth.triggerAttackRelease("C5", "8n", now);
+                synth.triggerAttackRelease("E5", "8n", now + 0.1);
+                synth.triggerAttackRelease("G5", "8n", now + 0.2);
+                synth.triggerAttackRelease("C6", "2n", now + 0.3);
+            } catch (e) {
+                // Ignorar si el navegador bloquea el audio antes de interacción
+            }
+        }
+
+        // Celebración automática al cargar la página
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                launchLatamConfetti(1.2);
+            }, 300);
+            setTimeout(() => {
+                confetti({
+                    particleCount: 95,
+                    spread: 100,
+                    origin: { y: 0.35 },
+                    colors: ['#ED1650', '#1B0088', '#D4AF37', '#38BDF8']
+                });
+            }, 950);
+        });
+
+        // Acción al hacer clic en "¡RECLAMAR Y CONFIRMAR MI PREMIO!"
+        function claimPrize() {
+            // Reproducir sonido y lanzar confeti extra
+            playCelebrationSound();
+            launchLatamConfetti(1.8);
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: 120,
+                    spread: 120,
+                    origin: { y: 0.5 },
+                    colors: ['#ED1650', '#1B0088', '#D4AF37', '#38BDF8']
+                });
+            }, 350);
+
+            // Mostrar sello visual de PREMIO CONFIRMADO • VUELO LA 4286 en el pase de abordar
+            const stamp = document.getElementById('confirmed-stamp');
+            stamp.classList.remove('hidden');
+            stamp.classList.add('stamp-active');
+
+            // Hacer scroll suave hacia el pase de abordar para apreciar el sello
+            document.getElementById('boarding-pass').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Actualizar estado del botón
+            const btn = document.getElementById('claim-btn');
+            const btnText = document.getElementById('claim-btn-text');
+            btn.classList.remove('bg-latam-coral', 'hover:bg-latam-coralHover', 'btn-pulse');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+            btnText.textContent = '¡Premio Reclamado y Confirmado!';
+
+            // Mostrar cuadro de mensaje emocionante
+            const confirmBox = document.getElementById('confirmation-box');
+            confirmBox.classList.remove('hidden');
+
+            isConfirmed = true;
+        }
+    </script>
+</body>
+</html>
